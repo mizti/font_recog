@@ -34,7 +34,7 @@ draw = ImageDraw.Draw(im)
 draw.text((text_x, text_y), text, fill=(0), font=font)
 
 #im.show()
-#im.save('image.png')
+im.save('image.png')
 
 image_array = np.asarray(im)
 
