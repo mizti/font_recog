@@ -6,20 +6,24 @@ from chainer import Link, Chain, ChainList
 import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
+from font_image_dataset import *
 
-train, test = datasets.get_mnist()
+#train, test = datasets.get_mnist()
 #print(train.__class__) # chainer.datasets.tuple_dataset.TupleDataset
 #for i in train:
     #print(i[0].__class__) # numpy.ndarray
     #print(i[0].shape) # (784,)
     #print(i[1]) # 7, 9, 5, ...
 
-print(test.__class__) # chainer.datasets.tuple_dataset.TupleDataset
+#print(test.__class__) # chainer.datasets.tuple_dataset.TupleDataset
 #print(iterators.SerialIterator) #chainer.iterators.serial_iterator.SerialIterator
 
-train_iter = iterators.SerialIterator(train, batch_size=100, shuffle=True)
+train_data = FontImageDataset(1000)
+test_data = FontImageDataset(1000)
 
-test_iter = iterators.SerialIterator(test, batch_size=100, repeat=False, shuffle=False)
+train_iter = iterators.SerialIterator(train_data, batch_size=100, shuffle=True)
+
+test_iter = iterators.SerialIterator(test_data, batch_size=100, repeat=False, shuffle=False)
 
 class MLP(Chain):
     def __init__(self, n_units, n_out):
@@ -47,11 +51,12 @@ class Classifier(Chain):
         return loss
 
 model = L.Classifier(MLP(100, 10))
+#print(cuda.get_device(0))
 optimizer = optimizers.SGD()
 
 optimizer.setup(model)
 
-updater = training.StandardUpdater(train_iter, optimizer)
+updater = training.StandardUpdater(train_iter, optimizer, device=-1)
 trainer = training.Trainer(updater, (25, 'epoch'), out='result')
 print("start running")
 trainer.extend(extensions.Evaluator(test_iter, model))
