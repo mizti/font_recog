@@ -14,6 +14,7 @@ train, test = datasets.get_mnist()
     #print(i[0].shape) # (784,)
     #print(i[1]) # 7, 9, 5, ...
 
+print(test.__class__) # chainer.datasets.tuple_dataset.TupleDataset
 #print(iterators.SerialIterator) #chainer.iterators.serial_iterator.SerialIterator
 
 train_iter = iterators.SerialIterator(train, batch_size=100, shuffle=True)
