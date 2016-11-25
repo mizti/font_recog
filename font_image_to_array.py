@@ -55,7 +55,7 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		draw.text((text_x, text_y), text, fill=(0), font=font)
 		
 		#im.show()
-		im.save('image' + str(random.randint(0, 100)) + '.png')
+		#im.save('image' + str(random.randint(0, 100)) + '.png')
 		
 		image_array = np.asarray(im)
 		
@@ -71,12 +71,15 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		return image_array, label
 
 	def get_example(self, i):
-		image_array, label = self.generate_image()
+		print(self._pairs)
+		image_array, label = self._pairs[i][0], self._pairs[i][1]
 		return image_array, label
 
-font_image_dataset = FontImageDataset()
-train, label = font_image_dataset.get_example(9)
-np.set_printoptions(threshold=np.inf)
+#font_image_dataset = FontImageDataset(3)
+#train, label = font_image_dataset.get_example(2)
+
+#print(train)
+#print(label)
 #train, test = datasets.get_mnist()
 #train_iter = iterators.SerialIterator(train, batch_size=100, shuffle=True)
 
