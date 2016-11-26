@@ -35,9 +35,9 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 	def generate_image(self):
 		fonts = [
 		    'font_files/Helvetica.ttf',
-		    'font_files/BodoniSvtyTwoITCTT-Book.ttf',
-			'font_files/Futura-Medium.ttf',
-			'font_files/Optima-Regular.ttf'
+		    'font_files/BodoniSvtyTwoITCTT-Book.ttf'
+#			'font_files/Futura-Medium.ttf',
+#			'font_files/Optima-Regular.ttf'
 		]
 		label = random.randint(0,len(fonts)-1)
 		fontFile = fonts[label]
