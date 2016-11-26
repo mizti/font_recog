@@ -18,17 +18,16 @@ import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
 
-NORMALIZE = True
-FLATTEN = True
-
 class FontImageDataset(chainer.dataset.DatasetMixin):
-	def __init__(self, datanum=10):
+	def __init__(self, datanum=10, normalize=True, flatten=True, train=True):
+		self._normalize = normalize
+		self._flatten = flatten
+		self._train = train
 		pairs = []
 		for _ in range(datanum):
 			image_array, label = self.generate_image()
 			pairs.append([image_array, label])
 		self._pairs = pairs
-						
 
 	def __len__(self):
 		return len(self._pairs)
@@ -42,9 +41,14 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		fontFile = fonts[label]
 		font = ImageFont.truetype(fontFile, 60)
 		
-		# TODO separate train / test characters
-		# TODO choose random character
-		text = 'X'
+		train_characters = ['A','B','C','D','E','F','G','H','I','J','K','L','M']
+		test_characters  = ['N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		text = ''
+
+		if self._train:
+			text = random.choice(train_characters)
+		else:
+			text = random.choice(test_characters)
 		
 		w, h = 64, 64
 		text_w, text_h = font.getsize(text)
@@ -53,27 +57,25 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		im = Image.new('L', (w, h), 255)
 		draw = ImageDraw.Draw(im)
 		draw.text((text_x, text_y), text, fill=(0), font=font)
-		
 		#im.save('image' + str(random.randint(0, 100)) + '.png')
-		
+		#if self._train:
+		#	im.save('image_train' + str(random.randint(0, 100)) + '.png')
+		#else:
+		#	im.save('image_test' + str(random.randint(0, 100)) + '.png')
+
 		image_array = np.asarray(im)
 		
-		if NORMALIZE:
+		if self._normalize:
 		    image_array = image_array / np.max(image_array)
 		
-		if FLATTEN:
+		if self._flatten:
 			image_array = image_array.flatten()
 		
-		# TODO return chainer.datasets.tuple_dataset.TupleDataset
-		# TODO make cnn model with chainer
-
 		# type cast
 		image_array = image_array.astype('float32')
 		label = np.int32(label)
-
 		return image_array, label
 
 	def get_example(self, i):
 		image_array, label = self._pairs[i][0], self._pairs[i][1]
 		return image_array, label
-
