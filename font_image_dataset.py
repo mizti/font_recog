@@ -35,14 +35,22 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 	def generate_image(self):
 		fonts = [
 		    'font_files/Helvetica.ttf',
-		    'font_files/BodoniSvtyTwoITCTT-Book.ttf'
+		    'font_files/BodoniSvtyTwoITCTT-Book.ttf',
+			'font_files/Futura-Medium.ttf',
+			'font_files/Optima-Regular.ttf'
 		]
 		label = random.randint(0,len(fonts)-1)
 		fontFile = fonts[label]
 		font = ImageFont.truetype(fontFile, 60)
 		
-		train_characters = ['A','B','C','D','E','F','G','H','I','J','K','L','M']
-		test_characters  = ['N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		train_characters = [
+			'A','B','C','D','E','F','G','H','I','J','K','L','M', 
+			'a','b','c','d','e','f','g','h','i','j','k','l','m'
+		]
+		test_characters  = [
+			'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+			'n','o','p','q','r','s','t','u','v','w','x','y','z'
+		]
 		text = ''
 
 		if self._train:
@@ -59,9 +67,9 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		draw.text((text_x, text_y), text, fill=(0), font=font)
 		#im.save('image' + str(random.randint(0, 100)) + '.png')
 		#if self._train:
-		#	im.save('image_train' + str(random.randint(0, 100)) + '.png')
+		#	im.save('temp/image_train' + str(random.randint(0, 100)) + '.png')
 		#else:
-		#	im.save('image_test' + str(random.randint(0, 100)) + '.png')
+		#	im.save('temp/image_test' + str(random.randint(0, 100)) + '.png')
 
 		image_array = np.asarray(im)
 		

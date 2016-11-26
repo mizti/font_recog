@@ -44,7 +44,7 @@ optimizer = optimizers.SGD()
 optimizer.setup(model)
 
 updater = training.StandardUpdater(train_iter, optimizer, device=-1)
-trainer = training.Trainer(updater, (200, 'epoch'), out='result')
+trainer = training.Trainer(updater, (300, 'epoch'), out='result')
 print("start running")
 trainer.extend(extensions.Evaluator(test_iter, model))
 trainer.extend(extensions.LogReport())
