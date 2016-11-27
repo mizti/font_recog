@@ -3,7 +3,6 @@
 # coding=utf-8
 # -*- coding: utf-8 -*-
 # vim: fileencoding=utf-8
-
 import sys
 import random
 import numpy as np
@@ -35,9 +34,16 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 	def generate_image(self):
 		fonts = [
 		    'font_files/Helvetica.ttf',
-		    'font_files/BodoniSvtyTwoITCTT-Book.ttf'
-#			'font_files/Futura-Medium.ttf',
-#			'font_files/Optima-Regular.ttf'
+		    'font_files/BodoniSvtyTwoITCTT-Book.ttf',
+			'font_files/Futura-Medium.ttf',
+			'font_files/Optima-Regular.ttf',
+			'font_files/superclarendon.ttf',
+			'font_files/GillSans.ttf',
+			'font_files/BigCaslon.ttf',
+			'font_files/AppleGaramond.ttf',
+			'font_files/Avenir-Roman.ttf',
+			'font_files/Times New Roman.ttf',
+			'font_files/AmericanTypewriter.ttf'
 		]
 		label = random.randint(0,len(fonts)-1)
 		fontFile = fonts[label]
@@ -66,6 +72,7 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 		draw = ImageDraw.Draw(im)
 		draw.text((text_x, text_y), text, fill=(0), font=font)
 		#im.save('image' + str(random.randint(0, 100)) + '.png')
+		
 		#if self._train:
 		#	im.save('temp/image_train' + str(random.randint(0, 100)) + '.png')
 		#else:

@@ -8,8 +8,8 @@ import chainer.links as L
 from chainer.training import extensions
 from font_image_dataset import *
 
-train_data = FontImageDataset(5000, train=True)
-test_data = FontImageDataset(5000, train=False)
+train_data = FontImageDataset(10000, train=True)
+test_data = FontImageDataset(10000, train=False)
 train_iter = iterators.SerialIterator(train_data, batch_size=200, shuffle=True)
 test_iter = iterators.SerialIterator(test_data, batch_size=200, repeat=False, shuffle=False)
 
@@ -38,18 +38,18 @@ class Classifier(Chain):
         report({'loss': loss, 'accuracy': accuracy}, self)
         return loss
 
-model = L.Classifier(MLP(100, 10))
+model = L.Classifier(MLP(100, 11))
 optimizer = optimizers.SGD()
 
 optimizer.setup(model)
 
 updater = training.StandardUpdater(train_iter, optimizer, device=-1)
-trainer = training.Trainer(updater, (300, 'epoch'), out='result')
+trainer = training.Trainer(updater, (500, 'epoch'), out='result')
 print("start running")
 trainer.extend(extensions.Evaluator(test_iter, model))
 trainer.extend(extensions.LogReport())
-#trainer.extend(extensions.PrintReport(['epoch', 'main/accuracy', 'validation/main/accuracy']))
-trainer.extend(extensions.PrintReport(['epoch', 'main/accuracy']))
+trainer.extend(extensions.PrintReport(['epoch', 'main/accuracy', 'validation/main/accuracy']))
+#trainer.extend(extensions.PrintReport(['epoch', 'main/accuracy']))
 trainer.extend(extensions.ProgressBar())
 trainer.run()
 print("end running")
