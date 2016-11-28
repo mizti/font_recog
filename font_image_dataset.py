@@ -34,16 +34,17 @@ class FontImageDataset(chainer.dataset.DatasetMixin):
 	def generate_image(self):
 		fonts = [
 		    'font_files/Helvetica.ttf',
-		    'font_files/BodoniSvtyTwoITCTT-Book.ttf',
-			'font_files/Futura-Medium.ttf',
-			'font_files/Optima-Regular.ttf',
-			'font_files/superclarendon.ttf',
-			'font_files/GillSans.ttf',
-			'font_files/BigCaslon.ttf',
-			'font_files/AppleGaramond.ttf',
-			'font_files/Avenir-Roman.ttf',
-			'font_files/Times New Roman.ttf',
-			'font_files/AmericanTypewriter.ttf'
+		    'font_files/BodoniSvtyTwoITCTT-Book.ttf'
+#			'font_files/Futura-Medium.ttf',
+#			'font_files/Optima-Regular.ttf',
+#			'font_files/superclarendon.ttf',
+#			'font_files/GillSans.ttf',
+#			'font_files/ACaslonPro-Regular.ttf',
+#			'font_files/AppleGaramond.ttf',
+#			'font_files/Avenir-Roman.ttf',
+#			'font_files/Times New Roman.ttf',
+#			'font_files/AmericanTypewriter.ttf',
+#			'font_files/TrajanPro-Regular.ttf'
 		]
 		label = random.randint(0,len(fonts)-1)
 		fontFile = fonts[label]

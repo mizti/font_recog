@@ -38,7 +38,7 @@ class Classifier(Chain):
         report({'loss': loss, 'accuracy': accuracy}, self)
         return loss
 
-model = L.Classifier(MLP(100, 11))
+model = L.Classifier(MLP(100, 12))
 optimizer = optimizers.SGD()
 
 optimizer.setup(model)
